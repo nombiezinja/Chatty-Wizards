@@ -6,7 +6,7 @@ class Chatbar extends Component {
 
   constructor(props){
     super(props);
-    this.state = {username: this.props.curentUser,
+    this.state = {username: this.props.currentUser,
                   message: ''}
   }
 
@@ -19,7 +19,10 @@ class Chatbar extends Component {
   }
 
   onPressEnter = (event) => {
-    this.props.handleKeyPress(event,this.state)
+    if(event.key == 'Enter'){
+      this.props.makeNewMessage(this.state);
+      event.target.value = '';
+    }
   }
 
   render() {

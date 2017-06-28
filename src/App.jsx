@@ -27,16 +27,13 @@ class App extends Component {
     this.state = users;
   }
 
-  handleKeyPress = (event, state) => {
-    if(event.key == 'Enter'){
-      console.log(state.message, state.username);
+  makeNewMessage = (message) => {
+      console.log(message.message, message.username);
       const newMessage = {id: Date.now(),
-        username: state.username,
-        content: state.message};
+        username: message.username,
+        content: message.message};
       const messages = this.state.messages.concat(newMessage)
       this.setState({messages: messages})
-    }
-
   }
 
   render() {
@@ -47,7 +44,7 @@ class App extends Component {
         <MessageList messageList={this.state.messages}/>
         <Chatbar
           currentUser={this.state.currentUser.name}
-          handleKeyPress={this.handleKeyPress}/>
+          makeNewMessage={this.makeNewMessage}/>
       </div>
     );
   }
