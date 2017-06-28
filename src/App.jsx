@@ -4,17 +4,17 @@ import MessageList from './MessageList.jsx';
 import Navbar from './NavBar.jsx';
 
 const users = {
-  currentUser: {name: "Bob"},
+  currentUser: {name: "Bloodninja"},
   messages: [
     {
+      id:Math.random(),
       username: "Bob",
-      content: "Has anyone seen my marbles?",
-      id:"01"
+      content: "Has anyone seen my marbles?"
     },
     {
+      id:Math.random(),
       username: "Anonymous",
-      content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
-      id:"02"
+      content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
     }
   ]
 };
@@ -22,18 +22,32 @@ const users = {
 
 class App extends Component {
 
+  componentDidMount(){
+    this.socket = new WebSocket('ws://localhost:3001');
+    this.socket.addEventListener('open', (event) => {
+      console.log('IT\'S ALIVE!');
+    });
+    this.socket.addEventListener('message', (event) => {
+      const message = JSON.parse(event.data);
+      console.log(message);
+      const newMessage = {
+        username: message.username,
+        content: message.content,
+        id: message.id
+      };
+      const messages = this.state.messages.concat(newMessage)
+      console.log('client received',messages);
+      this.setState({messages: messages})
+    })
+  }
+
   constructor(props){
     super(props);
     this.state = users;
   }
 
-  makeNewMessage = (message) => {
-      console.log(message.message, message.username);
-      const newMessage = {id: Date.now(),
-        username: message.username,
-        content: message.message};
-      const messages = this.state.messages.concat(newMessage)
-      this.setState({messages: messages})
+  newMessage = (message) => {
+    this.socket.send(JSON.stringify(message));
   }
 
   render() {
@@ -44,7 +58,7 @@ class App extends Component {
         <MessageList messageList={this.state.messages}/>
         <Chatbar
           currentUser={this.state.currentUser.name}
-          makeNewMessage={this.makeNewMessage}/>
+          newMessage={this.newMessage.bind(this)}/>
       </div>
     );
   }

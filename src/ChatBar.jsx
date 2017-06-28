@@ -20,13 +20,12 @@ class Chatbar extends Component {
 
   onPressEnter = (event) => {
     if(event.key == 'Enter'){
-      this.props.makeNewMessage(this.state);
+      this.props.newMessage(this.state);
       event.target.value = '';
     }
   }
 
   render() {
-    console.log('rendering Chatbar')
     return (
      <footer className="chatbar" onKeyPress={this.onPressEnter}>
        <input className="chatbar-username" placeholder={this.props.currentUser} onChange={this.handleUsernameChange} />
