@@ -29,10 +29,12 @@ let users = 0
 
 wss.on('connection', (ws) => {
   users++;
+  userColour = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
   const newUser = {
     type: 'incomingNotification',
     id: Math.random(),
-    content: 'Freshhhhh meeeeeat! A new user has just joined the channel.',
+    colour: userColour,
+    content: 'Rejoice! A new lover of the arcane powers has just joined the channel.',
   }
   wss.broadcast(JSON.stringify(newUser));
   const usersOnline = {
@@ -40,14 +42,6 @@ wss.on('connection', (ws) => {
     number: users
   }
   wss.broadcast(JSON.stringify(usersOnline));
-  const userColours = ['#C39BD3','#7FB3D5','#F7DC6F','#F1948A','#502D5B','#2D4E5B'];
-  const selectColour = userColours[Math.floor(Math.random()*userColours.length)];
-  const userColour = {
-    type: 'userColour',
-    colour: selectColour
-  }
-  wss.broadcast(JSON.stringify(userColour));
-
 
  ws.on('message', (data) => {
   const message = JSON.parse(data);

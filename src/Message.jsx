@@ -6,7 +6,7 @@ class Message extends Component {
   constructor(props){
     super(props);
     this.state = {
-      userColour: this.props.userColour,
+      userColour: this.props.userColour
       }
   }
 

@@ -5,7 +5,7 @@ import Navbar from './NavBar.jsx';
 
 const users = {
   usersOnline: 0,
-  currentUser: {name: "DerpAnon"},
+  currentUser: {name: "Some Random Mage"},
   userColour: '',
   messages: []
 };
@@ -45,14 +45,11 @@ class App extends Component {
           console.log('newnotification is',newNotification);
           const addNotification = this.state.messages.concat(newNotification);
           this.setState({messages: addNotification})
+          this.setState({userColour: message.colour})
           break;
         case 'usersOnline':
           console.log('usersOnline is', message.number);
           this.setState({usersOnline: message.number});
-          break;
-        case 'userColour':
-          console.log('userColour is', message.colour);
-          this.setState({userColour: message.colour});
           break;
         default:
           console.log('Unknown message type', message.type);
