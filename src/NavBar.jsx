@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import UsersOnline from './UsersOnline.jsx';
 
 class Navbar extends Component {
   render() {
-    console.log('rendering Navbar');
     return (
     <nav className="navbar">
-      <a href="/" className="navbar-brand">Chatty</a>
+      <a href="/" className="navbar-brand">I Put on My Wizard Robe and Hat to Chat</a>
+      <UsersOnline usersOnline={this.props.usersOnline}/>
     </nav>
     );
   }

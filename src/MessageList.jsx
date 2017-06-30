@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Message from './Message.jsx';
+import Notification from './Notification.jsx';
 
 
 class MessageList extends Component {
@@ -7,15 +8,22 @@ class MessageList extends Component {
     super(props);
   }
   render() {
-    console.log('rendering messagelist')
-    const allMessages = this.props.messageList.map((message) =>
-           <Message messageContent={message.content}
-                 username={message.username}
-                 key={message.id}/>
-     );
+    const allMessages = this.props.messageList.map((message) => {
+        const messages = <Message
+          imgUrl={message.imgUrl}
+          messageContent={message.content}
+          username={message.username}
+          key={message.id}
+          type={message.type}
+          userColour={this.props.userColour} />
+        const notifications = <Notification
+          notification={message.content}
+          key={message.id} />
+        return message.username ? messages : notifications
+     });
     return (
     <main className="messages">
-        {allMessages}
+      {allMessages}
     </main>
     );
   }

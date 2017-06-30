@@ -4,40 +4,60 @@ import MessageList from './MessageList.jsx';
 import Navbar from './NavBar.jsx';
 
 const users = {
-  currentUser: {name: "Bloodninja"},
-  messages: [
-    {
-      id:Math.random(),
-      username: "Bob",
-      content: "Has anyone seen my marbles?"
-    },
-    {
-      id:Math.random(),
-      username: "Anonymous",
-      content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-    }
-  ]
+  usersOnline: 0,
+  currentUser: {name: "DerpAnon"},
+  userColour: '',
+  messages: []
 };
 
 
 class App extends Component {
 
   componentDidMount(){
-    this.socket = new WebSocket('ws://localhost:3001');
+    this.socket = new WebSocket('ws:\/\/localhost:3001');
     this.socket.addEventListener('open', (event) => {
       console.log('IT\'S ALIVE!');
     });
+
     this.socket.addEventListener('message', (event) => {
       const message = JSON.parse(event.data);
-      console.log(message);
-      const newMessage = {
-        username: message.username,
-        content: message.content,
-        id: message.id
-      };
-      const messages = this.state.messages.concat(newMessage)
-      console.log('client received',messages);
-      this.setState({messages: messages})
+      console.log('parsed data received by client:', message);
+      switch(message.type) {
+        case 'incomingMessage':
+          const newMessage = message
+          const messages = this.state.messages.concat(newMessage)
+          this.setState({messages: messages})
+          break;
+        case 'incomingPicMessage':
+          console.log('issa pic')
+          const newPicMessage = message;
+          console.log(message);
+          const addPicMessages = this.state.messages.concat(newPicMessage)
+          console.log('client received imgurl',message.imgUrl);
+          this.setState({messages: addPicMessages})
+          break;
+        case 'incomingNotification':
+          console.log('notification is', message);
+          const newNotification = {
+            content: message.content,
+            id: message.id
+          }
+          console.log('newnotification is',newNotification);
+          const addNotification = this.state.messages.concat(newNotification);
+          this.setState({messages: addNotification})
+          break;
+        case 'usersOnline':
+          console.log('usersOnline is', message.number);
+          this.setState({usersOnline: message.number});
+          break;
+        case 'userColour':
+          console.log('userColour is', message.colour);
+          this.setState({userColour: message.colour});
+          break;
+        default:
+          console.log('Unknown message type', message.type);
+      }
+
     })
   }
 
@@ -47,18 +67,26 @@ class App extends Component {
   }
 
   newMessage = (message) => {
+    console.log(message);
     this.socket.send(JSON.stringify(message));
   }
 
+  newNotification = (notification) => {
+    console.log(notification);
+    this.socket.send(JSON.stringify(notification));
+  }
+
   render() {
-    console.log('rendering App')
     return (
       <div>
-        <Navbar />
-        <MessageList messageList={this.state.messages}/>
+        <Navbar usersOnline={this.state.usersOnline}/>
+        <MessageList
+          messageList={this.state.messages}
+          userColour={this.state.userColour}/>
         <Chatbar
           currentUser={this.state.currentUser.name}
-          newMessage={this.newMessage.bind(this)}/>
+          newMessage={this.newMessage.bind(this)}
+          newNotification={this.newNotification.bind(this)}/>
       </div>
     );
   }
