@@ -25,8 +25,6 @@ class Message extends Component {
     const style = {
       color:this.state.userColour
     }
-    let x = this.parseType();
-    console.log(x);
     return (
       <div className='message'>
         <span className='message-username' style={style}>{this.props.username}</span>

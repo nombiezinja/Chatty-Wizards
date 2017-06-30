@@ -1,45 +1,62 @@
-React Boilerplate
+Chatty-Wizards
 =====================
 
-A minimal and light dev environment for ReactJS.
+A lightweight and minimalistic themed chatroom built with Javascript, React.js, and WebSocket.
 
 ### Usage
 
-Clone the boilerplate and create your own git repo.
+ALl users are notified when a new user enters the chatroom or when a user changes their name. URLs of images will be rendered to display pictures along with any chat messages that may have been sent together. Each user is assigned a colour, which their name is displayed in.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
 
-Install the dependencies and start the server.
+### Getting Started
+```
+Install the dependencies and start the Webpack DevServer.
 
 ```
 npm install
 npm start
+```
+Open the folder called chatty_server, install dependencies, and start the WebSocket server.
+```
+cd chatty_server
+npm install
+npm start
+```
+Open the chatroom in the browser.
+```
 open http://localhost:3000
 ```
 
-### Static Files
+### Screenshot
 
-You can store static files like images, fonts, etc in the `build` folder.
+![Chat page](https://raw.githubusercontent.com/nombiezinja/Chatty-Wizards/master/doc/rsz_screenshot_from_2017-06-30_10-10-10.png)
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+### Issues
 
-### Linting
+Chatty-Wizards is mid-development phase and there are several known issues:
+1)Assigning colours to individual users do not work in ideal way - each time a new user enters chatroom, one colour is assigned/reassigned to all users present instead of each user getting a unique colour upon entering.
+2)Name changes are stored client-side rather than server side, a potential security problem
 
-This boilerplate project includes React ESLint configuration.
 
-```
-npm run lint
-```
+### Next-steps
+
+1)Fix known issues and restructure data infrastructure
+2)Integrate Socket.io and Redux
+3)Add themed chat-bot and possibly other plugins
+4)Deploy
 
 ### Dependencies
+
+#Dependencies for Wizard-Chatty:
 
 * React
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* node-sass
+* sass-loader
+
+#Dependencies for chatty_server:
+
+*Ws
+*Express

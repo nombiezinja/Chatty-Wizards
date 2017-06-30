@@ -1,7 +1,7 @@
 {
-  "name": "Chatty",
+  "name": "Chatty-Wizards",
   "version": "1.0.0",
-  "description": "Real time chat",
+  "description": "Real-time chat",
   "scripts": {
     "lint": "eslint --ext .jsx,.js src",
     "start": "node server.js"
@@ -10,20 +10,7 @@
     "type": "git",
     "url": "https://github.com/nombiezinja/chatty"
   },
-  "keywords": [
-    "react",
-    "reactjs",
-    "boilerplate",
-    "reload",
-    "live",
-    "edit",
-    "webpack"
-  ],
   "author": "Ti Zh",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/noahlotzer/react-simple-boilerplate/issues"
-  },
   "homepage": "https://github.com/nombiezinja/chatty",
   "engines": {
     "node": ">=6.0.0"
