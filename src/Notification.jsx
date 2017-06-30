@@ -9,4 +9,5 @@ class Notification extends Component {
      );
   }
 }
+
 export default Notification;

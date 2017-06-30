@@ -10,6 +10,7 @@ class Message extends Component {
       }
   }
 
+  //differentiated rendering of pic message vs non-pic message
   parseType(){
     switch(this.props.type) {
       case 'incomingPicMessage':

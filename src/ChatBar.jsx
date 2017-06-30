@@ -4,19 +4,25 @@ class Chatbar extends Component {
 
   constructor(props){
     super(props);
+    //set default username under this.props.username
+    //initialize this.state.currentUser to save username immediately before username change
     this.state = {username: this.props.currentUser,
                   message: '',
                   currentUser: ''}
   }
 
+  //onChange of message input register message in component state
   handleMessageChange = (event) => {
-    this.setState({message:event.target.value})
+    this.setState({message:event.target.value});
   }
 
+  //onChange of username input register username change in component state
   handleUsernameChange = (event) => {
-    this.setState({username:event.target.value})
+    this.setState({username:event.target.value});
   }
 
+  //onFocus of name input save previous username before change
+  //conditional loop to set previous username same as default username
   recordCurrentUser = (event) => {
     let currentUser
     if (event.target.value) {
@@ -24,10 +30,10 @@ class Chatbar extends Component {
     } else {
       currentUser = this.props.currentUser
     }
-    this.setState({currentUser: currentUser})
-    console.log('current user is', this.state.currentUser)
+    this.setState({currentUser: currentUser});
   }
 
+  //onKeyPress(Enter) in message input send both message and username to </App> and clear input
   sendMessage = (event) => {
     if(event.key == 'Enter'){
       const postMessage = {
@@ -39,7 +45,7 @@ class Chatbar extends Component {
       event.target.value = '';
     }
   }
-
+  //onKeyPress(Enter) in nae input send both prev and current username to </App>
   sendNotification = (event) => {
     if(event.key == 'Enter'){
       const postNotification = {

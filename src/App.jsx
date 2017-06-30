@@ -16,12 +16,11 @@ class App extends Component {
   componentDidMount(){
     this.socket = new WebSocket('ws:\/\/localhost:3001');
     this.socket.addEventListener('open', (event) => {
-      console.log('IT\'S ALIVE!');
     });
 
+    //differential handling of messages according to message types
     this.socket.addEventListener('message', (event) => {
       const message = JSON.parse(event.data);
-      console.log('parsed data received by client:', message);
       switch(message.type) {
         case 'incomingMessage':
           const newMessage = message
@@ -29,26 +28,20 @@ class App extends Component {
           this.setState({messages: messages})
           break;
         case 'incomingPicMessage':
-          console.log('issa pic')
           const newPicMessage = message;
-          console.log(message);
           const addPicMessages = this.state.messages.concat(newPicMessage)
-          console.log('client received imgurl',message.imgUrl);
           this.setState({messages: addPicMessages})
           break;
         case 'incomingNotification':
-          console.log('notification is', message);
           const newNotification = {
             content: message.content,
             id: message.id
           }
-          console.log('newnotification is',newNotification);
           const addNotification = this.state.messages.concat(newNotification);
           this.setState({messages: addNotification})
           this.setState({userColour: message.colour})
           break;
         case 'usersOnline':
-          console.log('usersOnline is', message.number);
           this.setState({usersOnline: message.number});
           break;
         default:
@@ -63,13 +56,11 @@ class App extends Component {
     this.state = users;
   }
 
+  //functions accessible by </MessageList> as props
   newMessage = (message) => {
-    console.log(message);
     this.socket.send(JSON.stringify(message));
   }
-
   newNotification = (notification) => {
-    console.log(notification);
     this.socket.send(JSON.stringify(notification));
   }
 

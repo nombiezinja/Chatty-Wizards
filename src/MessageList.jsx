@@ -2,13 +2,17 @@ import React, {Component} from 'react';
 import Message from './Message.jsx';
 import Notification from './Notification.jsx';
 
-
 class MessageList extends Component {
+
   constructor(props){
     super(props);
   }
+
   render() {
+
     const allMessages = this.props.messageList.map((message) => {
+        //use ternary statement to render notifications and messages differently
+        //declared variables to make ternary statement more reader-friendly
         const messages = <Message
           imgUrl={message.imgUrl}
           messageContent={message.content}
@@ -19,8 +23,9 @@ class MessageList extends Component {
         const notifications = <Notification
           notification={message.content}
           key={message.id} />
-        return message.username ? messages : notifications
+        return message.username ? messages : notifications;
      });
+
     return (
     <main className="messages">
       {allMessages}

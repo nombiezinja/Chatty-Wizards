@@ -17,7 +17,7 @@ npm install
 npm start
 ```
 
-Open the folder called chatty_server, install dependencies, and start the WebSocket server.
+Enter chatty_server server, install dependencies, and start the WebSocket server.
 ```
 cd chatty_server
 npm install

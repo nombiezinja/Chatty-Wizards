@@ -1,22 +1,16 @@
-// server.js
-
 const express = require('express');
 const SocketServer = require('ws').Server;
 const socket = require('ws')
 
-// Set the port to 3001
 const PORT = 3001;
 
-// Create a new express server
 const server = express()
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
-// Create the WebSockets server
 const wss = new SocketServer({ server });
 
-
+//function for broadcasting messages to clients
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     if (client.readyState === socket.OPEN) {
@@ -25,11 +19,15 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
+//set initial user counter
 let users = 0
 
 wss.on('connection', (ws) => {
+  //increments user counter with every connection
   users++;
+  //random colour generator
   userColour = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+  //notification when user enters chat + set colour for user
   const newUser = {
     type: 'incomingNotification',
     id: Math.random(),
@@ -37,6 +35,7 @@ wss.on('connection', (ws) => {
     content: 'Rejoice! A new lover of the arcane powers has just joined the channel.',
   }
   wss.broadcast(JSON.stringify(newUser));
+  //send new counter to clients
   const usersOnline = {
     type: 'usersOnline',
     number: users
@@ -44,11 +43,14 @@ wss.on('connection', (ws) => {
   wss.broadcast(JSON.stringify(usersOnline));
 
  ws.on('message', (data) => {
+
   const message = JSON.parse(data);
+
+  //conditional statement handling distinguishing messages from notifications
   if(message.type === 'postMessage'){
+    //nested conditional statement to detect presence of image url and construct message accordingly
     const imgUrlRegex = /(https?:\/\/[^\s]+[.png|.jpg|.gif])/g
     if(message.content.match(imgUrlRegex)){
-      console.log('issa picture');
       const imgUrl = message.content.match(imgUrlRegex).toString();
       const content = message.content.replace(message.content.match(imgUrlRegex),'\n');
       const newMessage = {
@@ -67,7 +69,6 @@ wss.on('connection', (ws) => {
         username: message.username,
         content: message.content,
       };
-      console.log('server received message:',newMessage);
       wss.broadcast(JSON.stringify(newMessage));
     }
   }
@@ -78,7 +79,6 @@ wss.on('connection', (ws) => {
       id: Math.random(),
       content: message.content
     };
-    console.log('server received notification:', newNotification);
     wss.broadcast(JSON.stringify(newNotification));
   }
   const newUser = {
@@ -89,7 +89,7 @@ wss.on('connection', (ws) => {
  });
 
   ws.on('close', () => {
-    console.log('Client disconnected');
+    //decreases counter accordingly when user session terminates
     users--;
     const usersOnline = {
       type: 'usersOnline',
