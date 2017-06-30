@@ -5,7 +5,7 @@ A lightweight and minimalistic themed chatroom built with Javascript, React.js, 
 
 ### Usage
 
-ALl users are notified when a new user enters the chatroom or when a user changes their name. URLs of images will be rendered to display pictures along with any chat messages that may have been sent together. Each user is assigned a colour, which their name is displayed in.
+ALl users are notified when a new user enters the chatroom or when a user changes their name. URLs of images will be rendered to display pictures along with any chat messages that may have been sent together. Each user is assigned a colour, which their name is displayed in. Counter displays current number of users online.
 
 
 ### Getting Started
