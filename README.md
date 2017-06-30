@@ -49,7 +49,7 @@ Chatty-Wizards is mid-development phase and there are several known issues:
 
 ### Dependencies
 
-#Dependencies for Wizard-Chatty:
+# Dependencies for Wizard-Chatty:
 
 * React
 * Webpack
@@ -58,7 +58,7 @@ Chatty-Wizards is mid-development phase and there are several known issues:
 * node-sass
 * sass-loader
 
-#Dependencies for chatty_server:
+# Dependencies for chatty_server:
 
-*Ws
-*Express
+* Ws
+* Express
