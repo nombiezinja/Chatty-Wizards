@@ -15,17 +15,19 @@ Install the dependencies and start the Webpack DevServer.
 ```
 npm install
 npm start
+```
 
 Open the folder called chatty_server, install dependencies, and start the WebSocket server.
 ```
 cd chatty_server
 npm install
 npm start
+```
 
 Open the chatroom in the browser.
 ```
 open http://localhost:3000
-
+```
 
 ### Screenshot
 
